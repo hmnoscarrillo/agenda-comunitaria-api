@@ -1,10 +1,10 @@
 # Agenda Comunitaria — base de datos y API REST
 
-Proyecto académico basado en el tema de agenda de eventos comunitarios. Conserva la arquitectura MVC entregada (configuración, modelos, controladores y rutas) y usa Node.js, Express y MySQL/MariaDB.
+Proyecto académico basado en agenda de eventos comunitarios. Conserva una arquitectura MVC (configuración, modelos, controladores y rutas) y usa Node.js, Express y MySQL/MariaDB.
 
 ## Estado de los requisitos
 
-La estructura de cinco tablas, restricciones, datos sintéticos de ejemplo, API CRUD, validación, colección Postman y material de diseño están preparados en este proyecto. La instancia comprobable actualmente es local. El código fuente se publicará en [GitHub](https://github.com/hmnoscarrillo/agenda-comunitaria-api). La base de datos cloud, la URL pública de API, la instalación completa de WordPress, las capturas y el video siguen pendientes de implementación/verificación.
+El modelo relacional, los datos sintéticos, la API CRUD y la colección Postman están implementados y probados localmente. El código fuente está publicado en [GitHub](https://github.com/hmnoscarrillo/agenda-comunitaria-api). En `C:\xampp\htdocs\agenda` está preparada una copia local de WordPress con el tema y plugin copiados; falta completar el instalador en el navegador, activar servicios y recopilar evidencias. El despliegue cloud de base de datos y API, las capturas y la grabación personal siguen pendientes.
 
 ## Modelo y relaciones
 
@@ -46,7 +46,7 @@ Base: `/api`. Cada respuesta JSON sigue `{ success, data?, message?, error? }`.
 | Eventos | `/api/eventos` | GET lista, GET `/:id`, POST, PUT `/:id`, DELETE `/:id` |
 | Inscripciones | `/api/inscripciones` | GET lista, GET `/:id`, POST, PUT `/:id`, DELETE `/:id` |
 
-GET `/api/eventos` incorpora los nombres de categoría y lugar para mostrar datos legibles. POST y PUT reciben JSON con todos los atributos editables; los IDs de relación deben existir.
+GET `/api/eventos` incorpora nombres de categoría y lugar. POST y PUT reciben JSON con todos los atributos editables; los IDs de relación deben existir.
 
 Estados: 201 al crear; 200 en lectura, actualización y borrado; 400 para entrada inválida; 404 para ID/ruta inexistente; 409 para duplicados o conflictos referenciales; 500 para error interno. No se devuelven detalles del motor SQL.
 
@@ -64,14 +64,14 @@ Estados: 201 al crear; 200 en lectura, actualización y borrado; 400 para entrad
 }
 ```
 
-La colección importable está en `postman/Agenda Comunitaria.postman_collection.json`. La entidad central elegida para demostrar CRUD es **evento**, porque tiene dos FK directas y es referenciada por inscripciones; representa la mayor cantidad de relaciones funcionales del modelo. La colección incluye CRUD, lectura individual y casos inválidos/con conflictos.
+La colección importable está en `postman/Agenda Comunitaria.postman_collection.json`. La entidad central elegida para demostrar CRUD es **evento**, porque tiene dos FK directas y es referenciada por inscripciones; representa la mayor cantidad de relaciones funcionales del modelo.
 
 ## WordPress
 
-Se incluye un plugin de shortcode en `wordpress-plugin/agenda-api/`. Instálalo en `wp-content/plugins/`, actívalo y coloca `[agenda_eventos]` en la página “Consumo de API”. Ajusta `AGENDA_API_BASE_URL` en `wp-config.php` a la URL pública del API (o a `http://localhost:3000` para una instalación local en el mismo equipo). El plugin consulta eventos en el servidor WordPress y presenta una tabla que se adapta a pantallas pequeñas. El plugin no sustituye instalar/configurar WordPress, crear las cuatro páginas, redactar su contenido, añadir banner/video, capturar evidencias ni grabar la presentación.
+El tema `wordpress-theme/agenda-comunitaria/`, plugin `wordpress-plugin/agenda-api/` y páginas WXR `wordpress-content/agenda-pages.xml` están preparados. El plugin ofrece `[agenda_eventos]` y consulta la API desde el servidor WordPress. Para instalación y pasos pendientes, consulta `wordpress-content/instalacion-wordpress.md`. La copia local está en `C:\xampp\htdocs\agenda`; falta completar el asistente web, importar páginas, activar servicios y verificar presentación.
 
 ## Despliegue y entregables externos
 
-Repositorio de código: https://github.com/hmnoscarrillo/agenda-comunitaria-api. Para el despliegue cloud falta crear una instancia MySQL y un servicio Node en el proveedor elegido, importar `database.sql`, definir variables de entorno, permitir la conexión del servicio API al host de base de datos y probar conteos, dos JOIN y `/health` desde fuera. Configura CORS/URL pública solo si el navegador va a llamar al API directamente; el shortcode incluido realiza la consulta desde WordPress.
+El repo de código está publicado en https://github.com/hmnoscarrillo/agenda-comunitaria-api. Falta crear una instancia MySQL cloud y un servicio Node en un proveedor, importar `database.sql`, definir variables en el panel y verificar conexión externa, conteos, JOIN, `/health` y CRUD público.
 
-El taller también exige capturas propias y un video de al menos 15 minutos con cámara activa. Esos materiales deben grabarse desde el equipo del estudiante y guardarse junto con el backup al entregar el comprimido en ISIS.
+El taller exige capturas propias y un video de al menos 15 minutos con cámara activa. El guion base de 16–18 minutos está en `wordpress-content/guion-video.md`; graba y personaliza la presentación desde el equipo del estudiante.

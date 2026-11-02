@@ -27,7 +27,7 @@ Estados: **Listo localmente**, **Preparado**, **Pendiente externo**. “Preparad
 | Validación y errores de datos/relaciones | Listo localmente | Casos 400, 404, UNIQUE 409 y FK 409 probados |
 | README de instalación y endpoints | Listo | `README.md` |
 | Conexión a DB cloud y API pública | Pendiente externo | Requiere host/credenciales de DB y servicio de publicación |
-| Código fuente publicado en GitHub | En proceso | Repositorio público `hmnoscarrillo/agenda-comunitaria-api` creado; se publica el snapshot sanitizado del código |
+| Código fuente publicado en GitHub | Listo | Repositorio público `hmnoscarrillo/agenda-comunitaria-api`; snapshot sanitizado publicado |
 
 ## Fase 3 — Postman / Insomnia
 
@@ -43,7 +43,7 @@ Estados: **Listo localmente**, **Preparado**, **Pendiente externo**. “Preparad
 
 | Requisito | Estado | Evidencia |
 |---|---|---|
-| Instalación local y acceso al administrador | En proceso | XAMPP 8.5.12 con Apache/PHP/phpMyAdmin instalado; aún falta terminar WordPress y el acceso al panel |
+| Instalación local y acceso al administrador | Parcial | XAMPP/PHP 8.5.12 y WordPress copiado en `C:\xampp\htdocs\agenda`; tema/plugin copiados. Falta iniciar Apache y completar asistente/importación |
 | Cuatro páginas y navegación | Preparado | Tema `wordpress-theme/agenda-comunitaria/` y WXR `wordpress-content/agenda-pages.xml` |
 | Plugin y consumo de datos reales | Preparado | `wordpress-plugin/agenda-api/`; shortcode `[agenda_eventos]` consume `/api/eventos` |
 | Tabla responsive | Implementada en código | CSS cambia filas a tarjetas en pantallas pequeñas; falta QA visual en WordPress |
@@ -66,3 +66,5 @@ Estados: **Listo localmente**, **Preparado**, **Pendiente externo**. “Preparad
 - Casos probados: validación 400, inexistente 404, UNIQUE 409 y FK 409.
 - Sintaxis JavaScript y JSON/XML de la colección, WXR y paquete validados.
 - No se añadió `.env` ni `node_modules` al paquete comprimido.
+
+
