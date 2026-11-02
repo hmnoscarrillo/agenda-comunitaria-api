@@ -24,7 +24,7 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Error interno del servidor' } });
 });
 
-const server = app.listen(port, () => console.log(`API Agenda Comunitaria en http://localhost:${port}`));
+const server = app.listen(port, '0.0.0.0', () => console.log(`API Agenda Comunitaria en http://localhost:${port}`));
 const shutdown = () => db.end(() => server.close(() => process.exit(0)));
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);

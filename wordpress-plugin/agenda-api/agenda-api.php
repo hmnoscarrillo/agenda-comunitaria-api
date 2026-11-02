@@ -9,14 +9,30 @@
 if (!defined('ABSPATH')) { exit; }
 
 function agenda_api_events_shortcode() {
-    $base = defined('AGENDA_API_BASE_URL') ? untrailingslashit(AGENDA_API_BASE_URL) : 'http://localhost:3000';
-    $response = wp_remote_get($base . '/api/eventos', array('timeout' => 8, 'headers' => array('Accept' => 'application/json')));
-    if (is_wp_error($response)) {
-        return '<p class="agenda-api-message" role="status">No se pudo conectar con la agenda. Inténtalo más tarde.</p>';
+    $base = defined('AGENDA_API_BASE_URL') ? untrailingslashit(AGENDA_API_BASE_URL) : 'http://127.0.0.1:3000';
+    $url = $base . '/api/eventos';
+
+    $context = stream_context_create(array(
+        'http' => array(
+            'method'  => 'GET',
+            'header'  => "Accept: application/json\r\nConnection: close\r\n",
+            'timeout' => 5
+        )
+    ));
+
+    $body = @file_get_contents($url, false, $context);
+
+    if ($body === false) {
+        // Alternativa con wp_remote_get
+        $response = wp_remote_get($url, array('timeout' => 5));
+        if (is_wp_error($response)) {
+            return '<p class="agenda-api-message" role="status">No se pudo conectar con la agenda. Inténtalo más tarde.</p>';
+        }
+        $body = wp_remote_retrieve_body($response);
     }
-    $status = wp_remote_retrieve_response_code($response);
-    $payload = json_decode(wp_remote_retrieve_body($response), true);
-    if ($status !== 200 || empty($payload['success']) || !isset($payload['data']) || !is_array($payload['data'])) {
+
+    $payload = json_decode($body, true);
+    if (empty($payload['success']) || !isset($payload['data']) || !is_array($payload['data'])) {
         return '<p class="agenda-api-message" role="status">La agenda no está disponible en este momento.</p>';
     }
     if (!$payload['data']) { return '<p class="agenda-api-message">Aún no hay eventos publicados.</p>'; }

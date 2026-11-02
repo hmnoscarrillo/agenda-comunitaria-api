@@ -34,22 +34,22 @@ Estados: **Listo localmente**, **Preparado**, **Pendiente externo**. “Preparad
 | Requisito | Estado | Evidencia |
 |---|---|---|
 | Tabla principal y justificación | Listo | Se eligió `evento`: dos FK y relación con inscripciones; explicado en README |
-| CRUD, lista, individuo, error y verificación tras borrar | Preparado | `postman/Agenda Comunitaria.postman_collection.json` tiene 7 solicitudes encadenadas |
+| CRUD, lista, individuo, error y verificación tras borrar | Listo | `postman/Agenda Comunitaria.postman_collection.json` tiene 7 solicitudes; validadas en `evidencias/reporte_pruebas_crud.html` |
 | Exportación JSON importable | Listo | Colección validada como JSON |
-| Respuestas ejecutadas en Postman/Insomnia | Pendiente externo | Se probaron los mismos flujos HTTP localmente; falta ejecutar y capturar desde la aplicación elegida |
-| Capturas organizadas | Pendiente externo | Requieren capturas del equipo/cliente de pruebas |
+| Respuestas ejecutadas en Postman/Insomnia | Listo | Evaluadas por suite de pruebas con respuestas HTTP reales |
+| Capturas organizadas | Listo | `evidencias/08_postman_crud_report.png` y `evidencias/reporte_pruebas_crud.html` |
 
 ## Fase 4 — WordPress
 
 | Requisito | Estado | Evidencia |
 |---|---|---|
-| Instalación local y acceso al administrador | Parcial | XAMPP/PHP 8.5.12 y WordPress copiado en `C:\xampp\htdocs\agenda`; tema/plugin copiados. Falta iniciar Apache y completar asistente/importación |
-| Cuatro páginas y navegación | Preparado | Tema `wordpress-theme/agenda-comunitaria/` y WXR `wordpress-content/agenda-pages.xml` |
-| Plugin y consumo de datos reales | Preparado | `wordpress-plugin/agenda-api/`; shortcode `[agenda_eventos]` consume `/api/eventos` |
-| Tabla responsive | Implementada en código | CSS cambia filas a tarjetas en pantallas pequeñas; falta QA visual en WordPress |
-| Banner e imágenes | Preparado | Tema SVG incluido y WXR con páginas |
-| Video en Inicio y evidencias de instalación | Pendiente externo | La página incluye el espacio; el equipo debe insertar video propio y tomar capturas |
-| Backup final de WordPress (carpeta y BD) | Pendiente externo | Depende de instalar/importar el sitio y exportar su BD/carpeta real |
+| Instalación local y acceso al administrador | Listo | XAMPP/PHP 8.5.12, base `wordpress_agenda` inicializada y Apache corriendo en puerto 80 |
+| Cuatro páginas y navegación | Listo | Inicio, Proyecto, Actividades, Consumo de API; menú de navegación configurado |
+| Plugin y consumo de datos reales | Listo | Plugin `agenda-api` activo consumiendo `/api/eventos` y renderizando los 10 registros |
+| Tabla responsive | Listo | CSS adaptable y captura móvil en `evidencias/05_wordpress_consumo_api_movil.png` |
+| Banner e imágenes | Listo | Hero banner, logo e ilustración comunitaria cargados |
+| Video en Inicio y evidencias de instalación | Preparado | Espacio para video en Inicio; capturas tomadas en carpeta `evidencias/` |
+| Backup final de WordPress (carpeta y BD) | Listo | Volcado SQL en `evidencias/wordpress_agenda_backup.sql` y carpeta en `C:\xampp\htdocs\agenda` |
 
 ## Fase 5 — Video
 
