@@ -1,0 +1,45 @@
+{
+  "info": {
+    "name": "Agenda Comunitaria API",
+    "description": "Pruebas CRUD y validación de eventos, tabla central relacionada con categorías, lugares e inscripciones. Los scripts guardan el ID creado para encadenar las peticiones.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [{ "key": "baseUrl", "value": "http://localhost:3000" }, { "key": "eventoId", "value": "1" }],
+  "item": [
+    {
+      "name": "Eventos — lectura de lista",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/eventos" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('200 y JSON consistente', () => { pm.response.to.have.status(200); const j=pm.response.json(); pm.expect(j.success).to.eql(true); pm.expect(j.data).to.be.an('array'); });", "pm.test('Incluye nombres relacionados', () => { const j=pm.response.json(); if(j.data.length) { pm.expect(j.data[0]).to.have.property('categoria'); pm.expect(j.data[0]).to.have.property('lugar'); } });"] } }]
+    },
+    {
+      "name": "Eventos — lectura individual",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/eventos/{{eventoId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('200 y un evento', () => { pm.response.to.have.status(200); const j=pm.response.json(); pm.expect(j.success).to.eql(true); pm.expect(j.data).to.have.property('id'); });"] } }]
+    },
+    {
+      "name": "Eventos — CREATE",
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"categoria_id\": 1,\n  \"lugar_id\": 1,\n  \"titulo\": \"Evento creado desde Postman\",\n  \"descripcion\": \"Prueba automatizada CRUD del taller.\",\n  \"fecha_inicio\": \"2026-12-10 10:00:00\",\n  \"fecha_fin\": \"2026-12-10 12:00:00\",\n  \"estado\": \"programado\"\n}" }, "url": "{{baseUrl}}/api/eventos" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('201 creado', () => { pm.response.to.have.status(201); const j=pm.response.json(); pm.expect(j.success).to.eql(true); pm.collectionVariables.set('eventoId', j.data.id); });"] } }]
+    },
+    {
+      "name": "Eventos — UPDATE",
+      "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"categoria_id\": 1,\n  \"lugar_id\": 1,\n  \"titulo\": \"Evento actualizado desde Postman\",\n  \"descripcion\": \"Prueba de actualización completa.\",\n  \"fecha_inicio\": \"2026-12-10 11:00:00\",\n  \"fecha_fin\": \"2026-12-10 13:00:00\",\n  \"estado\": \"programado\"\n}" }, "url": "{{baseUrl}}/api/eventos/{{eventoId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('200 actualizado', () => { pm.response.to.have.status(200); pm.expect(pm.response.json().success).to.eql(true); });"] } }]
+    },
+    {
+      "name": "Eventos — error de validación",
+      "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"categoria_id\": 999999,\n  \"lugar_id\": 1,\n  \"titulo\": \"Debe fallar\",\n  \"descripcion\": \"Referencia inexistente\",\n  \"fecha_inicio\": \"2026-12-10 10:00:00\",\n  \"fecha_fin\": \"2026-12-10 12:00:00\",\n  \"estado\": \"programado\"\n}" }, "url": "{{baseUrl}}/api/eventos" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('409 por FK inexistente', () => { pm.response.to.have.status(409); pm.expect(pm.response.json().error.code).to.eql('REFERENCE_CONFLICT'); });"] } }]
+    },
+    {
+      "name": "Eventos — DELETE",
+      "request": { "method": "DELETE", "header": [], "url": "{{baseUrl}}/api/eventos/{{eventoId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('200 eliminado', () => { pm.response.to.have.status(200); pm.expect(pm.response.json().success).to.eql(true); });"] } }]
+    },
+    {
+      "name": "Eventos — confirmar borrado (404)",
+      "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/api/eventos/{{eventoId}}" },
+      "event": [{ "listen": "test", "script": { "type": "text/javascript", "exec": ["pm.test('404 tras eliminar', () => { pm.response.to.have.status(404); pm.expect(pm.response.json().error.code).to.eql('NOT_FOUND'); });"] } }]
+    }
+  ]
+}

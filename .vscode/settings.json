@@ -1,0 +1,12 @@
+{
+  "terminal.integrated.profiles.windows": {
+    "API Auto": {
+      "path": "C:\\Windows\\System32\\cmd.exe",
+      "args": [
+        "/k",
+        "${workspaceFolder}\\start.bat"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "API Auto"
+}

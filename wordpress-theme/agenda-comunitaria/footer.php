@@ -1,0 +1,1 @@
+</main><footer class="site-footer"><div><strong>Agenda Comunitaria</strong><p>Conectamos personas, espacios e iniciativas del barrio.</p><a href="#contenido">Volver al contenido</a></div></footer><?php wp_footer(); ?></body></html>
